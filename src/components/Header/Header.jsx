@@ -8,7 +8,11 @@ const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   console.log(user);
 
-  const handleLogOut = () => {};
+  const handleLogOut = () => {
+    logOut()
+      .then((result) => {})
+      .catch((error) => console.log(error));
+  };
 
   return (
     <nav className="header">
@@ -21,7 +25,7 @@ const Header = () => {
         <Link to="/signup">Sign up</Link>
 
         {user && (
-          <span>
+          <span className="text-white">
             Welcome {user.email}{" "}
             <button onClick={handleLogOut}>Sign out</button>
           </span>
