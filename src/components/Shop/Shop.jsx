@@ -52,26 +52,26 @@ const Shop = () => {
       body: JSON.stringify(ids),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log("only products in the shopping", data);
+      .then((cartProducts) => {
+        const savedCart = [];
+        // step 1: get id of the addedProduct
+        for (const id in storedCart) {
+          // step 2: get product from products state by using id
+          const addedProduct = cartProducts.find(
+            (product) => product._id === id
+          );
+          if (addedProduct) {
+            // step 3: add quantity
+            const quantity = storedCart[id];
+            addedProduct.quantity = quantity;
+            // step 4: add the added product to the saved cart
+            savedCart.push(addedProduct);
+          }
+        }
+        // step 5: set the cart
+        setCart(savedCart);
       });
-
-    const savedCart = [];
-    // step 1: get id of the addedProduct
-    for (const id in storedCart) {
-      // step 2: get product from products state by using id
-      const addedProduct = products.find((product) => product._id === id);
-      if (addedProduct) {
-        // step 3: add quantity
-        const quantity = storedCart[id];
-        addedProduct.quantity = quantity;
-        // step 4: add the added product to the saved cart
-        savedCart.push(addedProduct);
-      }
-    }
-    // step 5: set the cart
-    setCart(savedCart);
-  }, [products]);
+  }, []);
 
   const handleAddToCart = (product) => {
     let newCart = [];
