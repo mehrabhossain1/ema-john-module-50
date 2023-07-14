@@ -42,6 +42,20 @@ const Shop = () => {
 
   useEffect(() => {
     const storedCart = getShoppingCart();
+    const ids = Object.keys(storedCart);
+
+    fetch("http://localhost:5000/productsByIds", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(ids),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("only products in the shopping", data);
+      });
+
     const savedCart = [];
     // step 1: get id of the addedProduct
     for (const id in storedCart) {
