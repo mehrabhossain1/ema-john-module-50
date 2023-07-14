@@ -13,10 +13,12 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const { totalProducts } = useLoaderData();
   // console.log(totalProducts);
 
-  const itemsPerPage = 10; //TODO: make it dynamic
+  // const itemsPerPage = 10; //TODO: make it dynamic
   const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
   const pageNumbers = [...Array(totalPages).keys()];
@@ -71,6 +73,12 @@ const Shop = () => {
     deleteShoppingCart();
   };
 
+  const options = [5, 10, 20];
+  function handleSelectChange(e) {
+    setItemsPerPage(parseInt(e.target.value));
+    setCurrentPage(0);
+  }
+
   return (
     <>
       <div className='shop-container'>
@@ -94,9 +102,27 @@ const Shop = () => {
 
       {/* pagination */}
       <div className='pagination'>
+        <p>
+          Current Page: {currentPage} and items per page: {itemsPerPage}
+        </p>
+
         {pageNumbers.map((number) => (
-          <button key={number}>{number}</button>
+          <button
+            key={number}
+            className={currentPage === number ? "selected" : ""}
+            onClick={() => setCurrentPage(number)}
+          >
+            {number}
+          </button>
         ))}
+
+        <select value={itemsPerPage} onChange={handleSelectChange}>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
     </>
   );
