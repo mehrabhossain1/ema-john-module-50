@@ -35,7 +35,7 @@ const Shop = () => {
         `http://localhost:5000/products?page=${currentPage}&limit=${itemsPerPage}`
       );
       const data = await response.json();
-      setData(data);
+      setProducts(data);
     }
     fetchData();
   }, [currentPage, itemsPerPage]);
