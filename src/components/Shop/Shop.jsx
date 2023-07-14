@@ -7,10 +7,12 @@ import {
   deleteShoppingCart,
   getShoppingCart,
 } from "../../utilities/fakedb";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const { totalProducts } = useLoaderData();
 
   useEffect(() => {
     fetch("http://localhost:5000/products")
